@@ -1,0 +1,76 @@
+{
+  "name": "vscode-terminal-manage",
+  "displayName": "Terminal Manage",
+  "description": "根据终端标题自动设置颜色和标题后缀，由本地 JSON 配置文件驱动，支持三方脚本动态修改",
+  "version": "0.1.0",
+  "publisher": "yulunyue",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yulunyue/vscode_terminal_manage"
+  },
+  "engines": {
+    "vscode": "^1.83.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "terminal",
+    "color",
+    "management",
+    "automation"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "terminalManage.reloadConfig",
+        "title": "Terminal Manage: 重载配置"
+      },
+      {
+        "command": "terminalManage.openConfig",
+        "title": "Terminal Manage: 打开配置文件"
+      },
+      {
+        "command": "terminalManage.showRules",
+        "title": "Terminal Manage: 显示规则列表"
+      }
+    ],
+    "configuration": {
+      "title": "Terminal Manage",
+      "properties": {
+        "terminalManage.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用/禁用插件"
+        },
+        "terminalManage.configPath": {
+          "type": "string",
+          "default": "",
+          "description": "自定义配置文件绝对路径（留空则自动查找 .vscode/terminal-manage.json）"
+        }
+      }
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": "terminal-manage.json",
+        "url": "./schemas/terminal-manage-schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.83.0",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Terminal Manage 配置文件 Schema",
+  "description": "VSCode Terminal Manage 插件规则定义",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "配置文件版本",
+      "default": "1.0"
+    },
+    "rules": {
+      "type": "array",
+      "description": "终端匹配规则列表",
+      "items": {
+        "$ref": "#/definitions/TerminalRule"
+      }
+    }
+  },
+  "required": ["version", "rules"],
+  "definitions": {
+    "TerminalRule": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "规则名称，用于标识和调试"
+        },
+        "match": {
+          "$ref": "#/definitions/MatchRule"
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "description": "终端标签颜色（Hex 色值），如 #ff0000"
+        },
+        "suffix": {
+          "type": "string",
+          "description": "匹配成功后追加到终端标题的后缀文本"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "是否启用该规则",
+          "default": true
+        }
+      },
+      "required": ["title", "match"]
+    },
+    "MatchRule": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["exact", "prefix", "regex"],
+          "description": "匹配方式: exact=精确匹配, prefix=前缀匹配, regex=正则匹配"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "匹配模式字符串"
+        }
+      },
+      "required": ["type", "pattern"]
+    }
+  }
+}
